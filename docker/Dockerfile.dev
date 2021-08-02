@@ -4,5 +4,5 @@ COPY ./Cargo.toml ./Cargo.toml
 COPY ./docker/entrypoint.sh /entrypoint.sh
 COPY ./src ./src
 RUN cargo install cargo-watch
-
+EXPOSE 8080
 ENTRYPOINT [ "/entrypoint.sh" ]
