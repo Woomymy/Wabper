@@ -1,8 +1,8 @@
-use actix_web::{Responder, web};
-async fn hello() -> impl Responder {
-    "hello"
+use actix_web::{web, Responder};
+/// GET /api/ping: Check if the server is up
+async fn ping() -> impl Responder {
+    "ping"
 }
 pub fn api() -> actix_web::Scope {
-    web::scope("/api")
-        .route("/hello", web::get().to(hello))
+    web::scope("/api").route("/ping", web::get().to(ping))
 }
