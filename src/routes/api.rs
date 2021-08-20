@@ -1,5 +1,4 @@
 use actix_web::{web, HttpRequest, HttpResponse, Responder};
-use qstring::QString;
 use serde::{Deserialize, Serialize};
 /// GET /api/ping: Check if the server is up
 async fn ping() -> impl Responder {
@@ -22,7 +21,6 @@ async fn create(
     >,
     info: web::Json<CreateQuery>,
 ) -> HttpResponse {
-    let query_str = QString::from(req.query_string());
     let mut pool = data.get().unwrap();
     let author = info.author.clone().unwrap_or_else(|| String::from("Guest"));
 
