@@ -1,5 +1,7 @@
 version: "3.9"
-
+networks:
+  db:
+    external: false
 services:
   wabper:
     build:
@@ -9,3 +11,17 @@ services:
       - "8080:8080"
     volumes:
       - ".:/usr/src/wabper"
+    networks:
+      - "db"
+  db:
+    image: "postgres:13.3"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=wabper
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "6532:6532"
+    networks:
+      - "db"
+    volumes:
+      - "./data:/var/lib/postgresql/data"
