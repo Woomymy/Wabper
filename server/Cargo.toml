@@ -1,0 +1,11 @@
+[package]
+name = "wabper-server"
+description = "Core wabper server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.4.4"
+wabper-router = { path = "../packages/router" }
+wabper-common = { path = "../packages/common" }
+tokio = { version = "1", features = ["full"] }
