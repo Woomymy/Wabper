@@ -1,7 +1,6 @@
-use axum::{AddExtensionLayer, Server};
+use axum::Server;
 use std::net::SocketAddr;
 use wabper_common::Error;
-use wabper_db::db_get_connection;
 use wabper_router::get_axum_router;
 
 #[tokio::main]

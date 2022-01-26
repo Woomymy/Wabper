@@ -1,7 +1,6 @@
 //! Wabper router
 mod routes;
 use axum::{
-    error_handling::HandleError,
     routing::{get, post},
     AddExtensionLayer, Router,
 };
