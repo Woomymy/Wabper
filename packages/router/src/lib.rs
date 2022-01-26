@@ -15,5 +15,6 @@ pub fn get_axum_router() -> Result<Router, Error> {
     Ok(Router::new()
         .route("/ping", get(ping))
         .route("/api/create", post(routes::api::create_paste))
+        .route("/pastes/:id", get(routes::pastes::get_paste))
         .layer(AddExtensionLayer::new(db_client)))
 }
