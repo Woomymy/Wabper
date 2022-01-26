@@ -1,3 +1,5 @@
+use std::num::ParseIntError;
+
 use axum::body;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
@@ -46,6 +48,12 @@ impl From<std::env::VarError> for Error {
 
 impl From<r2d2::Error> for Error {
     fn from(e: r2d2::Error) -> Self {
+        Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
+    }
+}
+
+impl From<ParseIntError> for Error {
+    fn from(e: ParseIntError) -> Self {
         Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
     }
 }
