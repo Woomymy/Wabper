@@ -1,8 +1,10 @@
+use super::schema::pastes;
+use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
-
-#[derive(Queryable, Serialize, Deserialize)]
+#[derive(Queryable, Insertable, Serialize, Deserialize)]
+#[table_name = "pastes"]
 pub struct Paste {
-    pub id: i32,
+    pub id: String,
     pub body: String,
     pub title: String,
     pub author: String,

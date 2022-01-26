@@ -1,6 +1,6 @@
 table! {
     pastes (id) {
-        id -> Int4,
+        id -> Text,
         body -> Text,
         title -> Text,
         author -> Text,
