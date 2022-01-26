@@ -3,8 +3,13 @@ name = "wabper-router"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 axum = "0.4.4"
 tokio = { version = "1", features = ["full"] }
+wabper-db = { path = "../db" }
+wabper-common = { path = "../common" }
+serde = { version = "1.0.135", features = ["derive"] }
+
+[dependencies.diesel]
+features = ["postgres", "r2d2"]
+version = "1.4.4"

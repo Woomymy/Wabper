@@ -4,6 +4,7 @@ networks:
     external: false
 services:
   wabper:
+    env_file: ".env"
     build:
       context: "."
       dockerfile: ./docker/Dockerfile.dev
@@ -20,8 +21,8 @@ services:
       - POSTGRES_DB=wabper
       - POSTGRES_PASSWORD=password
     ports:
-      - "6532:6532"
+      - "5432:5432"
     networks:
       - "db"
     volumes:
-      - "./data:/var/lib/postgresql/data"
+      - "../wabper-data:/var/lib/postgresql/data"

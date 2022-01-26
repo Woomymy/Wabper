@@ -1,0 +1,14 @@
+[package]
+edition = "2021"
+name = "wabper-db"
+version = "0.1.0"
+
+[dependencies]
+serde = "1.0.136"
+
+[dependencies.diesel]
+features = ["postgres", "r2d2"]
+version = "1.4.4"
+
+[dependencies.wabper-common]
+path = "../common"

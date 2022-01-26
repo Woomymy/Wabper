@@ -8,4 +8,5 @@ edition = "2021"
 axum = "0.4.4"
 wabper-router = { path = "../packages/router" }
 wabper-common = { path = "../packages/common" }
+wabper-db = { path = "../packages/db" }
 tokio = { version = "1", features = ["full"] }

@@ -1,2 +1,2 @@
 [workspace]
-members = ["server", "packages/router", "packages/common"]
+members = ["server", "packages/router", "packages/common", "packages/db"]
