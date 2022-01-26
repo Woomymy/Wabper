@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 axum = "0.4.4"
-hyper = "*"
 diesel = { version = "1.4.4", features = ["postgres", "r2d2"] }
+hyper = "0.14.16"
 r2d2 = "0.8.9"
 rand = "0.8.4"
