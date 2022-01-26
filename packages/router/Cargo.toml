@@ -9,6 +9,9 @@ tokio = { version = "1", features = ["full"] }
 wabper-db = { path = "../db" }
 wabper-common = { path = "../common" }
 serde = { version = "1.0.135", features = ["derive"] }
+tracing = "0.1.29"
+tower-http = { version = "0.2.1", features = ["trace"] }
+tower = "0.4.11"
 
 [dependencies.diesel]
 features = ["postgres", "r2d2"]

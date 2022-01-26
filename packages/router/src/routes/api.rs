@@ -29,5 +29,6 @@ pub async fn create_paste(
     diesel::insert_into(pastes::table)
         .values(&paste)
         .get_result::<Paste>(&connection)?;
+
     Ok((StatusCode::OK, Json(paste)))
 }

@@ -5,6 +5,7 @@ version = "0.1.0"
 
 [dependencies]
 serde = "1.0.136"
+tracing = "0.1.29"
 
 [dependencies.diesel]
 features = ["postgres", "r2d2"]
