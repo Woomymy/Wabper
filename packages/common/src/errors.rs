@@ -58,6 +58,12 @@ impl From<ParseIntError> for Error {
     }
 }
 
+impl From<argon2::password_hash::Error> for Error {
+    fn from(e: argon2::password_hash::Error) -> Self {
+        Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
+    }
+}
+
 impl IntoResponse for Error {
     fn into_response(self) -> Response {
         Response::builder()

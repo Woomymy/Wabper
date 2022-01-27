@@ -6,4 +6,5 @@ pub struct Paste {
     pub body: String,
     pub title: String,
     pub author: String,
+    pub deletionpw: String,
 }

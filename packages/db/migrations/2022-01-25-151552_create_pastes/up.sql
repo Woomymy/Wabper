@@ -3,5 +3,6 @@ CREATE TABLE pastes (
     id TEXT PRIMARY KEY,
     body TEXT NOT NULL,
     title TEXT NOT NULL,
-    author TEXT NOT NULL
+    author TEXT NOT NULL,
+    deletionpw TEXT NOT NULL
 )
