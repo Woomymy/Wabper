@@ -3,6 +3,7 @@ use std::num::ParseIntError;
 use axum::body;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
+use hyper::header::ToStrError;
 
 #[derive(Debug)]
 pub struct Error(String, StatusCode);
@@ -60,6 +61,18 @@ impl From<ParseIntError> for Error {
 
 impl From<argon2::password_hash::Error> for Error {
     fn from(e: argon2::password_hash::Error) -> Self {
+        Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
+    }
+}
+
+impl From<(String, StatusCode)> for Error {
+    fn from(e: (String, StatusCode)) -> Self {
+        Self(e.0, e.1)
+    }
+}
+
+impl From<ToStrError> for Error {
+    fn from(e: ToStrError) -> Self {
         Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
     }
 }

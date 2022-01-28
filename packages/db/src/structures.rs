@@ -8,3 +8,15 @@ pub struct Paste {
     pub author: String,
     pub deletionpw: String,
 }
+
+impl Paste {
+    pub fn without_delete_pw(&self) -> Paste {
+        Paste {
+            id: self.id.clone(),
+            body: self.body.clone(),
+            title: self.title.clone(),
+            author: self.author.clone(),
+            deletionpw: "HIDDEN".to_string(),
+        }
+    }
+}
