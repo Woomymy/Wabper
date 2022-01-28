@@ -20,3 +20,16 @@ impl Paste {
         }
     }
 }
+
+#[derive(Serialize, Deserialize)]
+pub struct ServerInfo {
+    version: &'static str,
+}
+
+impl Default for ServerInfo {
+    fn default() -> Self {
+        Self {
+            version: env!("CARGO_PKG_VERSION"),
+        }
+    }
+}
