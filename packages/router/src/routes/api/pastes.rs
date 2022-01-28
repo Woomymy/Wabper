@@ -8,7 +8,7 @@ use axum::{
 use diesel::prelude::*;
 use wabper_common::{
     types::{DbConnection, DbPoolExtension},
-    util::{check_password, gen_deletion_pw, gen_id, hash_string},
+    util::{check_password, gen_deletion_pw, gen_id, hash_string, DB_CONNECTION_TIMEOUT},
     Error,
 };
 use wabper_db::{
@@ -25,7 +25,7 @@ pub async fn post_paste(
     Json(pasteinfo): Json<NewPaste>,
     Extension(db): DbPoolExtension,
 ) -> Result<impl IntoResponse, Error> {
-    let connection: DbConnection = db.get()?;
+    let connection: DbConnection = db.get_timeout(DB_CONNECTION_TIMEOUT)?;
     let NewPaste {
         author,
         body,
@@ -61,7 +61,7 @@ pub async fn get_paste(
     Path(id): Path<String>,
     Extension(db): DbPoolExtension,
 ) -> Result<impl IntoResponse, Error> {
-    let connection: DbConnection = db.get()?;
+    let connection: DbConnection = db.get_timeout(DB_CONNECTION_TIMEOUT)?;
     let paste = pastes.filter(pasteid.eq(id)).first::<Paste>(&connection)?;
 
     Ok(Json(paste.without_delete_pw()))
@@ -86,7 +86,7 @@ pub async fn delete_paste(
     }
     if let Some(pw) = headers.get(header::AUTHORIZATION) {
         let pass = pw.to_str()?.to_string();
-        let connection: DbConnection = db.get()?;
+        let connection: DbConnection = db.get_timeout(DB_CONNECTION_TIMEOUT)?;
         let paste = pastes.filter(pasteid.eq(&id)).first::<Paste>(&connection)?;
 
         if check_password(pass, paste.deletionpw.clone())? {

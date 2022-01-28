@@ -1,7 +1,12 @@
+use std::time::Duration;
+
 use argon2::{password_hash::SaltString, Argon2, PasswordHash, PasswordHasher, PasswordVerifier};
 use rand::{rngs::OsRng, Rng};
 
 use crate::Error;
+
+/// Timeout for DB connection
+pub const DB_CONNECTION_TIMEOUT: Duration = Duration::from_secs(1);
 
 /// Lenght of paste ID
 pub const ID_LEN: u8 = 10;
