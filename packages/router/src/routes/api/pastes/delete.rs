@@ -4,12 +4,12 @@ use axum::{
     response::IntoResponse,
     Json,
 };
-use diesel::{
-    prelude::*,
-    r2d2::{ConnectionManager, Pool, PooledConnection},
-    PgConnection,
+use diesel::prelude::*;
+use wabper_common::{
+    types::{DbConnection, DbPoolExtension},
+    util::check_password,
+    Error,
 };
-use wabper_common::{util::check_password, Error};
 use wabper_db::{
     schema::pastes::dsl::{id as pasteid, pastes},
     structures::Paste,
@@ -18,7 +18,7 @@ use wabper_db::{
 pub async fn delete_paste(
     Path(id): Path<String>,
     headers: HeaderMap,
-    Extension(db): Extension<Pool<ConnectionManager<PgConnection>>>,
+    Extension(db): DbPoolExtension,
 ) -> Result<impl IntoResponse, Error> {
     if !headers.contains_key(header::AUTHORIZATION) {
         return Err(Error::from((
@@ -28,8 +28,9 @@ pub async fn delete_paste(
     }
     if let Some(pw) = headers.get(header::AUTHORIZATION) {
         let pass = pw.to_str()?.to_string();
-        let connection: PooledConnection<ConnectionManager<PgConnection>> = db.get()?;
+        let connection: DbConnection = db.get()?;
         let paste = pastes.filter(pasteid.eq(&id)).first::<Paste>(&connection)?;
+
         if check_password(pass, paste.deletionpw.clone())? {
             diesel::delete(pastes.filter(pasteid.eq(&id))).execute(&connection)?;
             return Ok(Json(paste.without_delete_pw()));

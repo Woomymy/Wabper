@@ -2,22 +2,21 @@ use axum::{extract::Extension, http::StatusCode, response::IntoResponse};
 use diesel::prelude::*;
 
 use axum::Json;
-use diesel::{
-    r2d2::{ConnectionManager, Pool, PooledConnection},
-    PgConnection,
-};
+
 use wabper_common::{
+    types::{DbConnection, DbPoolExtension},
     util::{gen_deletion_pw, gen_id, hash_string},
     Error,
 };
 use wabper_db::models::NewPaste;
 use wabper_db::schema::pastes;
 use wabper_db::structures::Paste;
+
 pub async fn create_paste(
     Json(pasteinfo): Json<NewPaste>,
-    Extension(db): Extension<Pool<ConnectionManager<PgConnection>>>,
+    Extension(db): DbPoolExtension,
 ) -> Result<impl IntoResponse, Error> {
-    let connection: PooledConnection<ConnectionManager<PgConnection>> = db.get()?;
+    let connection: DbConnection = db.get()?;
     let NewPaste {
         author,
         body,

@@ -3,8 +3,8 @@ use std::num::ParseIntError;
 use axum::body;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
-use hyper::header::ToStrError;
 
+use hyper::header::ToStrError;
 #[derive(Debug)]
 pub struct Error(String, StatusCode);
 
