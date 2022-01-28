@@ -14,7 +14,7 @@ pub fn get_api_router() -> Router {
         .route("/serverinfo", get(serverinfo::serverinfo))
         .route(
             "/pastes/:id",
-            get(pastes::get::get_paste).delete(pastes::delete::delete_paste),
+            get(pastes::get_paste).delete(pastes::delete_paste),
         )
-        .route("/pastes/create", post(pastes::post::create_paste))
+        .route("/pastes/create", post(pastes::post_paste))
 }

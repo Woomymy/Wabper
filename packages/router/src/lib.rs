@@ -13,6 +13,7 @@ use wabper_db::get_db_connection;
 
 mod routes;
 
+/// Gets axum router with all routes
 pub fn get_axum_router() -> Result<Router, Error> {
     let db_client = get_db_connection()?;
 
