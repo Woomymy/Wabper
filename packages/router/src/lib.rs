@@ -17,5 +17,9 @@ pub fn get_axum_router() -> Result<Router, Error> {
     Ok(Router::new()
         .nest("/api", routes::api::get_api_router())
         .layer(AddExtensionLayer::new(db_client))
-        .layer(TraceLayer::new_for_http().on_request(Logger)))
+        .layer(
+            TraceLayer::new_for_http()
+                .on_request(Logger)
+                .on_response(Logger),
+        ))
 }
