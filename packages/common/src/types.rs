@@ -4,9 +4,14 @@ use diesel::{
     PgConnection,
 };
 
+/// Connection manager for Postgres connection
+pub type PgConnectionManager = ConnectionManager<PgConnection>;
+
 /// Database pool type (PgSQL)
-pub type DbPool = Pool<ConnectionManager<PgConnection>>;
+pub type DbPool = Pool<PgConnectionManager>;
+
 /// Axum extension with DbPool inside
 pub type DbPoolExtension = Extension<DbPool>;
+
 /// "Pooled" database connection (PgSQL)
-pub type DbConnection = PooledConnection<ConnectionManager<PgConnection>>;
+pub type DbConnection = PooledConnection<PgConnectionManager>;

@@ -2,26 +2,34 @@ use argon2::{password_hash::SaltString, Argon2, PasswordHash, PasswordHasher, Pa
 use rand::{rngs::OsRng, Rng};
 
 use crate::Error;
-// All chars allowed in url IG
-pub const ID_LEN: u8 = 8; // Lenght of paste ID
-pub const REVOKE_LEN: u8 = 31;
+
+/// Lenght of paste ID
+pub const ID_LEN: u8 = 10;
+
+/// Lenght of deletion password
+pub const DELETEPW_LEN: u8 = 32;
+
+/// All chars that a ID can contain
 pub const ID_CHARSET: &[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 /// Generated valid paste ID
 pub fn gen_id() -> String {
     let mut rng = rand::thread_rng();
-    // Generate 9 chars
-    (0..=ID_LEN)
+    // Generate random chars
+    (0..ID_LEN)
         .map(|_| ID_CHARSET[rng.gen_range(0..ID_CHARSET.len())] as char)
         .collect()
 }
+
 /// Generate deletion pw
 pub fn gen_deletion_pw() -> String {
     let mut rng = rand::thread_rng();
 
-    (0..=REVOKE_LEN)
+    (0..DELETEPW_LEN)
         .map(|_| ID_CHARSET[rng.gen_range(0..ID_CHARSET.len())] as char)
         .collect()
 }
+
 /// Hash string using argon2
 pub fn hash_string(input: String) -> Result<String, Error> {
     let salt = SaltString::generate(&mut OsRng);

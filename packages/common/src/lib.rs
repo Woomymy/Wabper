@@ -1,4 +1,4 @@
-//! Common wabper lib
+//! Common wabper lib (errors, types, ...)
 
 mod errors;
 pub mod util;

@@ -1,16 +1,15 @@
-use std::num::ParseIntError;
+use axum::{
+    body,
+    http::StatusCode,
+    response::{IntoResponse, Response},
+};
 
-use axum::body;
-use axum::http::StatusCode;
-use axum::response::{IntoResponse, Response};
-
-use hyper::header::ToStrError;
 #[derive(Debug)]
 pub struct Error(String, StatusCode);
 
 impl From<std::io::Error> for Error {
     fn from(e: std::io::Error) -> Self {
-        Self(format!("{}", e), StatusCode::INTERNAL_SERVER_ERROR)
+        Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
     }
 }
 
@@ -53,8 +52,8 @@ impl From<r2d2::Error> for Error {
     }
 }
 
-impl From<ParseIntError> for Error {
-    fn from(e: ParseIntError) -> Self {
+impl From<std::num::ParseIntError> for Error {
+    fn from(e: std::num::ParseIntError) -> Self {
         Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
     }
 }
@@ -71,8 +70,8 @@ impl From<(String, StatusCode)> for Error {
     }
 }
 
-impl From<ToStrError> for Error {
-    fn from(e: ToStrError) -> Self {
+impl From<hyper::header::ToStrError> for Error {
+    fn from(e: hyper::header::ToStrError) -> Self {
         Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
     }
 }

@@ -20,5 +20,5 @@ pub async fn get_paste(
     let connection: DbConnection = db.get()?;
     let paste = pastes.filter(pasteid.eq(id)).first::<Paste>(&connection)?;
 
-    Ok(Json(paste))
+    Ok(Json(paste.without_delete_pw()))
 }

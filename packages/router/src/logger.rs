@@ -1,6 +1,7 @@
 use axum::body::Body;
 use tower_http::trace::{OnRequest, OnResponse};
 #[derive(Clone)]
+/// Wabper logger for tower_http traits (trasmits all logs to "tracing" macros of the `tracing` crate)
 pub struct Logger;
 
 impl OnRequest<Body> for Logger {
