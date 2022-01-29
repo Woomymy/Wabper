@@ -76,6 +76,12 @@ impl From<hyper::header::ToStrError> for Error {
     }
 }
 
+impl From<diesel_migrations::RunMigrationsError> for Error {
+    fn from(e: diesel_migrations::RunMigrationsError) -> Self {
+        Self(e.to_string(), StatusCode::INTERNAL_SERVER_ERROR)
+    }
+}
+
 impl IntoResponse for Error {
     fn into_response(self) -> Response {
         Response::builder()
