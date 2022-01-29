@@ -3,8 +3,7 @@ WORKDIR /usr/src/wabper
 
 COPY ./packages ./packages
 COPY ./server ./server
-COPY ./Cargo.* ./
-COPY ./entrypoint.sh ./
+COPY ./docker/entrypoint.sh ./
 
 RUN apt-get update && apt-get install libpq-dev -y
 RUN cargo install --path server
