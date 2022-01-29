@@ -14,11 +14,16 @@ pub mod schema;
 pub mod structures;
 
 use diesel::r2d2::{ConnectionManager, Pool};
-use wabper_common::{types::PgConnectionManager, util::DB_CONNECTION_TIMEOUT, Error};
+use wabper_common::{
+    types::{DbPool, PgConnectionManager},
+    util::DB_CONNECTION_TIMEOUT,
+    Error,
+};
 
+// Embed all migrations
 embed_migrations!("migrations");
 
-pub fn get_db_connection() -> Result<diesel::r2d2::Pool<PgConnectionManager>, Error> {
+pub fn get_db_connection() -> Result<DbPool, Error> {
     let db_url = std::env::var("DATABASE_URL")?;
     info!("Database URL: {db_url}");
     let manager: PgConnectionManager = ConnectionManager::new(&db_url);

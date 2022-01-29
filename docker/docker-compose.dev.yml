@@ -4,14 +4,14 @@ networks:
     external: false
 services:
   wabper:
-    env_file: ".env"
+    env_file: "../.env"
     build:
       context: "."
       dockerfile: ./docker/Dockerfile.dev
     ports:
       - "8080:8080"
     volumes:
-      - ".:/usr/src/wabper"
+      - "..:/usr/src/wabper"
     networks:
       - "db"
   db:
@@ -25,4 +25,4 @@ services:
     networks:
       - "db"
     volumes:
-      - "../wabper-data:/var/lib/postgresql/data"
+      - "../../wabper-data:/var/lib/postgresql/data"
