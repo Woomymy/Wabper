@@ -1,0 +1,20 @@
+version: "3"
+networks:
+  db:
+    external: false
+
+services:
+  wabper:
+    env_file: ".env"
+    image: "woomy4680/wabper:latest"
+    ports:
+      - "8080:8080"
+    networks:
+      - "db"
+  db:
+    image: "postgres:14.1"
+    env_file: ".env"
+    networks:
+      - "db"
+    volumes:
+      - "../wabper-data:/var/lib/postgresql/data"
